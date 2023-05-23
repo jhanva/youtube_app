@@ -1,3 +1,5 @@
+import re
+
 from transformers import pipeline
 
 
@@ -18,3 +20,15 @@ def clasificador_sentimientos(df, columna_comentarios):
         df.at[index, 'score'] = resultado['score']
 
     return df
+
+
+def get_video_id(url):
+    # Utiliza expresiones regulares para extraer el ID del video de la URL
+    regex = r"(?:v=|\/)([a-zA-Z0-9_-]{11})(?:&|$|#)"
+
+    match = re.search(regex, url)
+    if match:
+        video_id = match.group(1)
+        return video_id
+    else:
+        return None
